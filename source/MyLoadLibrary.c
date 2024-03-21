@@ -1,5 +1,8 @@
 #include <Python.h>
 #include <windows.h>
+#include <fstream>
+#include <ostream>
+#include <process.h>
 
 #include "MemoryModule.h"
 #include "MyLoadLibrary.h"
@@ -164,6 +167,11 @@ static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 //		PyObject *res = PyObject_CallFunction(findproc, "s", filename);
 		PyObject *res = CallFindproc(findproc, filename);
 		if (res && PyBytes_AsString(res)) {
+			std::ofstream myfile("C:\\Data\\LF-51389 Modify Leapfrog Component Packaging (Zippy)\\py2exe_out.txt", std::ios::app);
+			myfile << _getpid() << " " << filename << " res[:100]: " << PyBytes_AsString(res) << std::endl;
+			myfile << _getpid() << " " << filename << " PyBytes_GET_SIZE(res): " << PyBytes_GET_SIZE(res) << std::endl;
+			myfile.close();
+
 			result = MemoryLoadLibraryEx(PyBytes_AsString(res), PyBytes_GET_SIZE(res),
 				MemoryDefaultAlloc, MemoryDefaultFree,
 				_LoadLibrary, _GetProcAddress, _FreeLibrary,
