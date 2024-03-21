@@ -1,8 +1,8 @@
+#include <fstream>
+#include <iostream>
+#include <process.h>
 #include <Python.h>
 #include <windows.h>
-#include <fstream>
-#include <ostream>
-#include <process.h>
 
 #include "MemoryModule.h"
 #include "MyLoadLibrary.h"
