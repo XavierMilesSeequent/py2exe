@@ -174,7 +174,7 @@ static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 
 			char path1[] = "C:\\Data\\LF-51389 Modify Leapfrog Component Packaging (Zippy)\\copies";
 			char fullPath[512];
-			snprintf(fullPath, sizeof(fullPath), "%s\\%d\\%s", path1, _getpid(), filename);
+			snprintf(fullPath, sizeof(fullPath), "%s\\%d_%s", path1, _getpid(), filename);
 
 			FILE* file = fopen(fullPath, "w");
 			if (file != NULL) {
