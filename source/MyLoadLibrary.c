@@ -168,9 +168,22 @@ static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 		if (res && PyBytes_AsString(res)) {
 			//FILE* file = fopen("C:\\Data\\py2exe_out.txt", 'a');
 			//printf("file: %p\n", file);
-			printf("%d %s res: %p", _getpid(), filename, res);
-			printf("%d %s PyBytes_GET_SIZE(res): %zd", _getpid(), filename, PyBytes_GET_SIZE(res));
+			printf("%d %s res: %p\r\n", _getpid(), filename, res);
+			printf("%d %s PyBytes_GET_SIZE(res): %zd\r\n", _getpid(), filename, PyBytes_GET_SIZE(res));
 			//fclose(file);
+
+			char path1[] = "C:\\Data\\LF-51389 Modify Leapfrog Component Packaging (Zippy)\\copies";
+			char fullPath[512];
+			snprintf(fullPath, sizeof(fullPath), "%s\\%d\\%s", path1, _getpid(), filename);
+
+			FILE* file = fopen(fullPath, "w");
+			if (file != NULL) {
+				char* str = PyBytes_AsString(res);
+				fprintf(file, "%s", str);
+				fclose(file);
+			} else {
+				printf("Error opening file %s\r\n", fullPath);
+			}
 
 			result = MemoryLoadLibraryEx(PyBytes_AsString(res), PyBytes_GET_SIZE(res),
 				MemoryDefaultAlloc, MemoryDefaultFree,
