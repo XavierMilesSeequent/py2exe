@@ -172,10 +172,16 @@ static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 			printf("%d %s PyBytes_GET_SIZE(res): %zd\r\n", _getpid(), filename, PyBytes_GET_SIZE(res));
 			//fclose(file);
 
+			char* new_filename = malloc(strlen(filename) + 1);
+			for (int i = 0; filename[i]; i++) {
+				new_filename[i] = (filename[i] == '/') ? '\\' : filename[i];
+			}
+			new_filename[strlen(filename)] = '\0';  // Null-terminate the new string
+
 			char path1[] = "C:\\Data\\LF-51389 Modify Leapfrog Component Packaging (Zippy)\\copies";
 			char fullPath[512];
-			snprintf(fullPath, sizeof(fullPath), "%s\\%d_%s", path1, _getpid(), filename);
-
+			snprintf(fullPath, sizeof(fullPath), "%s\\%d_%s", path1, _getpid(), new_filename);
+			
 			FILE* file = fopen(fullPath, "wb"); // Open the file in binary mode
 			if (file != NULL) {
 				char* str = PyBytes_AsString(res);
