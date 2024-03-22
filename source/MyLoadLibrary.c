@@ -174,7 +174,7 @@ static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 
 			char* new_filename = malloc(strlen(filename) + 1);
 			for (int i = 0; filename[i]; i++) {
-				new_filename[i] = (filename[i] == '/') ? '\\' : filename[i];
+				new_filename[i] = (filename[i] == '/') ? '_' : filename[i];
 			}
 			new_filename[strlen(filename)] = '\0';  // Null-terminate the new string
 
