@@ -176,10 +176,11 @@ static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 			char fullPath[512];
 			snprintf(fullPath, sizeof(fullPath), "%s\\%d_%s", path1, _getpid(), filename);
 
-			FILE* file = fopen(fullPath, "w");
+			FILE* file = fopen(fullPath, "wb"); // Open the file in binary mode
 			if (file != NULL) {
 				char* str = PyBytes_AsString(res);
-				fprintf(file, "%s", str);
+				Py_ssize_t size = PyBytes_Size(res);
+				fwrite(str, 1, size, file);
 				fclose(file);
 			} else {
 				printf("Error opening file %s\r\n", fullPath);
