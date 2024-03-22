@@ -166,11 +166,11 @@ static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 //		PyObject *res = PyObject_CallFunction(findproc, "s", filename);
 		PyObject *res = CallFindproc(findproc, filename);
 		if (res && PyBytes_AsString(res)) {
-			FILE* file = fopen("C:\\Data\\py2exe_out.txt", 'a');
-			printf("file: %p\n", file);
-			fprintf(file, "%d %s res: %p", _getpid(), filename, res);
-			fprintf(file, "%d %s PyBytes_GET_SIZE(res): %zd", _getpid(), filename, PyBytes_GET_SIZE(res));
-			fclose(file);
+			//FILE* file = fopen("C:\\Data\\py2exe_out.txt", 'a');
+			//printf("file: %p\n", file);
+			printf("%d %s res: %p", _getpid(), filename, res);
+			printf("%d %s PyBytes_GET_SIZE(res): %zd", _getpid(), filename, PyBytes_GET_SIZE(res));
+			//fclose(file);
 
 			result = MemoryLoadLibraryEx(PyBytes_AsString(res), PyBytes_GET_SIZE(res),
 				MemoryDefaultAlloc, MemoryDefaultFree,
